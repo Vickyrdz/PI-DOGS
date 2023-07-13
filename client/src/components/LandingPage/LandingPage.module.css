@@ -4,15 +4,14 @@
 }
 
 .title {
-  /* color: black; */
   z-index: 1;
   font-size: 60px;
   position: relative;
   left: 50px;
-  padding-top: 80px;
+  padding-top: 120px;
   color: white;
   text-shadow: -2px 0 #111827, 0 -2px #111827, 2px 0 #111827, 0 2px #111827, 2px 2px #111827, -2px -2px #111827, -2px 2px #111827, 2px -2px #111827, 6px 6px #fcb900;
-  
+  top: 40px;
 }
 
 .title2{
@@ -22,8 +21,9 @@
   font-size: 60px;
   position: relative;
   left: 85px;
-  
+  top: 40px;
 }
+
 
 .button{
   padding: 10px 15px 10px 15px;
@@ -35,7 +35,29 @@
   border: none;
   border-radius: 8px;
   color: white;
+  top: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+
+} 
+
+.button:hover{
+  padding: 12px 17px 12px 17px;
+  position: relative;
+  left: 260px;
+  font-size: 25px;
+  background-color: #f9a004;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  top: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
+
 
 .bubble {
   width: 100%;

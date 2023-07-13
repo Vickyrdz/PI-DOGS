@@ -6,13 +6,10 @@ module.exports = (sequelize) => {
 
   sequelize.define("Dog", {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-      validate : {
-        min: 265, 
-      }
+      primaryKey: true
     },
     image: {
       type: DataTypes.STRING,

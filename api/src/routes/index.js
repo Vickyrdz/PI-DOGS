@@ -15,7 +15,7 @@ router.get("/dogs", (req, res) => {
     getDogs(req, res);
 });
 
-router.get("/dogs/:idRaza", (req, res) => {
+router.get("/dogs/:id", (req, res) => {
     getDogsById(req, res);
 })
 

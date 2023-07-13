@@ -1,16 +1,27 @@
 import './App.css';
-import { Route, Switch } from "react-router-dom"; 
+import { Route, Routes, useLocation} from "react-router-dom"; 
 import Landing from './components/LandingPage/LandingPage';
+import Navbar from './components/homePage/Navbar/Navbar';
+import DogList from './components/DogList/DogList';
+import Detail from './components/homePage/Detail/Detail';
+// import Card from './components/homePage/Card/Card';
+
 
 
 function App() {
+  const {pathname} = useLocation(); 
+
   return (
     <div >
-       <Switch>
-            <Route path='/' exact>
-              <Landing/>
-            </Route>
-       </Switch>
+      {pathname !== "/" && <Navbar/>}
+      <div>
+      <Routes>
+          <Route exact path='/' element={<Landing/>}/>
+          <Route path='/home' element={<DogList/>}/>
+          <Route path='/detail/:id' element={<Detail/>}/>
+      </Routes>
+      </div>
+     
     </div>
   );
 }
