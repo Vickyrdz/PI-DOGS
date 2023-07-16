@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { getAllDogs } from '../../redux/actions';
-import Card from '../LAHomePage/Card/Card'
+import Card from '../HomePage/Card/Card'
 import styles from "../DogList/DogList.module.css"; 
-import { Pagination } from "../LAHomePage/Pagination/Pagination";
+import { Pagination } from "../HomePage/Pagination/Pagination";
 
 export default function DogList () {
     const dispatch = useDispatch();

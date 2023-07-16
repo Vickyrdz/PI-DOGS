@@ -1,9 +1,9 @@
 import './App.css';
 import { Route, Routes, useLocation} from "react-router-dom"; 
 import Landing from './components/LandingPage/LandingPage';
-import Navbar from './components/LAHomePage/Navbar/Navbar';
+import Navbar from './components/HomePage/Navbar/Navbar';
 import DogList from './components/DogList/DogList';
-import Detail from './components/LAHomePage/Detail/Detail';
+import Detail from './components/HomePage/Detail/Detail';
 // import Card from './components/homePage/Card/Card';
 
 
