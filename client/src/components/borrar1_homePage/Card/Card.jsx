@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../Card/Card.module.css"; 
 import { Link } from "react-router-dom"; 
-// import decoDog from '../../../assets/decoDog1.png';
-// import decoDog2 from '../../../assets/decoDog2.png'
-// import decoDog from '../../../assets/decoDog.png'; 
+
 
 function Card ({
     id,
@@ -12,16 +10,21 @@ function Card ({
     height,
     weight,
     life_span
-}) {
+}) 
+{
+
+  
+
+
+
     //Esto es porque en la api aparece esa info como objeto 
     const heightToDisplay = typeof height === 'object' ? height.imperial : height;
     const weightToDisplay = typeof weight === 'object' ? weight.imperial : weight;
     const imageToDisplay = typeof image === 'object' ? image.url : image;
 
-
     return (
         <div className={styles.cardContainer}>
-            <Link to={`/dogs/${id}`} className={styles.link}>
+            <Link to={`/detail/${id}`} className={styles.link}>
                 <h1 className={styles.title}>{name}</h1>
             </Link>
 

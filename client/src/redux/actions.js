@@ -14,7 +14,7 @@ export const getAllDogs = () => {
         payload: data,
       });
     } catch (error) {
-      console.log(error.message);
+      alert("Not Found");
     }
   };
 }; 
@@ -29,7 +29,6 @@ export const getDogById = (id) => {
         payload: data,
       });
     } catch (error) {
-      console.log(error.message);
       return dispatch({ type: GET_DOG_BY_ID_ERROR });
     }
   }

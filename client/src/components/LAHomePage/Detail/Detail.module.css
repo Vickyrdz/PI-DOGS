@@ -1,0 +1,173 @@
+.detailContainer{
+    /* margin-top: 150px; */
+    display: flex;
+    flex-direction: column;
+}
+
+.title{
+    height: 50px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    text-shadow: -2px 0 #111827, 0 -2px #111827, 2px 0 #111827, 0 2px #111827, 2px 2px #111827, -2px -2px #111827, -2px 2px #111827, 2px -2px #111827, 6px 6px #fcb900;
+    font-size: 60px;
+    color: white;
+    padding-bottom: 90px;
+}
+.rows{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    bottom: 30px;
+}
+
+.right{
+    position: relative;
+    left: 50px;
+    width: 50%;
+}
+
+.decoImg{
+    position: relative;
+    bottom: 50px;
+}
+
+
+.img {
+    height: 220px;
+    position: relative;
+    /* right: 200px; */
+    bottom: 370px;
+    border-radius: 20px;
+    border: 10px solid #fbe6ba;
+    border-color: white;
+    left: 100px;
+    width: 300px;
+
+}
+
+
+.bubble1{
+    position: relative;
+    bottom: 120px;
+    /* left: 100px; */
+    z-index: -1;
+    /* height: 5px; */
+    width: 350px;
+}
+
+.bubble2{
+    width: 300px;
+    position: relative;
+    bottom: 200px;
+    left: 350px;
+    z-index: -1;
+    transform: rotate(90deg);
+    -webkit-transform: rotate(190deg);
+}
+.left{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    font-size: 20px;
+}
+
+
+/*LifeSpan */
+
+.containerIconLife{
+    display: flex;
+}
+
+.iconLife{
+    height: 50px;
+    position: relative;
+    right: 8px;
+    top: 10px;
+    border-radius: 100px;
+    /* border-color: red; */
+    border: 10px solid #fbe6ba;
+
+}
+
+.lifeSpan{
+    font-size: 20px;
+    position: relative;
+    top: 15px;
+}
+
+
+/*Height */
+
+
+.iconH{
+    height: 50px;
+    transform: scaleX(1);
+    position: relative;
+    top: 15px;
+    border-radius: 100px;
+    border: 10px solid #fbe6ba;
+    left: 10px;
+}
+
+.containerIconH{
+    display: flex;
+    flex-direction: row-reverse;
+    position: relative;
+    right: 60px;
+}
+
+.height{
+    font-size: 20px;
+    position: relative;
+    top: 18px;
+}
+
+
+
+/*Weight */
+
+.iconW{
+    height: 50px;
+    top: 10px;
+    position: relative;
+    right: 5px;
+    border-radius: 100px;
+    /* border-color: red; */
+    border: 10px solid #fbe6ba;
+}
+
+.containerIconW{
+    display: flex;
+}
+
+.weight{
+    font-size: 20px;
+    position: relative;
+    top: 15px;
+}
+
+
+
+/*Temperaments */
+
+.iconT{
+    height: 50px;
+    top: 15px;
+    position: relative;
+    right: 5px;
+    border-radius: 100px;
+    /* border-color: red; */
+    border: 10px solid #fbe6ba;
+}
+
+.containerIconT{
+    display: flex;
+}
+
+.temperament{
+    font-size: 20px;
+    position: relative;
+    top: 15px;
+    width: 350px;
+}

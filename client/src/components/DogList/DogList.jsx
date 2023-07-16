@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { getAllDogs } from '../../redux/actions';
-import Card from '../homePage/Card/Card'
+import Card from '../LAHomePage/Card/Card'
 import styles from "../DogList/DogList.module.css"; 
+import { Pagination } from "../LAHomePage/Pagination/Pagination";
 
 export default function DogList () {
     const dispatch = useDispatch();
@@ -17,10 +18,20 @@ export default function DogList () {
         dispatch(getAllDogs()); //dispacth trae la info 
     }, []);
 
+    const [page, setPage] = useState(1); 
+    const [quantityForPage, setQuantityForPage] = useState(8); 
+
+    
+    const max = Math.ceil( dogs.length / quantityForPage); 
+    
+    console.log({ l: dogs.length });
     return (
-        <div className={styles.dogListContainer}>
+        
+        <div>
+            <div  className={styles.dogListContainer}>
             {
-                dogs.map((item) => (
+                dogs.slice((page - 1) * quantityForPage, (page - 1) * quantityForPage + quantityForPage)
+                .map((item) => (
                     <Card
                         key={item.id}
                         id={item.id}
@@ -32,6 +43,10 @@ export default function DogList () {
                     />
                 ))
             }
+            </div>
+            <div className={styles.pagination}>
+                <Pagination page={page} setPage={setPage} max={max}/>
+            </div>
         </div>
     );
 };

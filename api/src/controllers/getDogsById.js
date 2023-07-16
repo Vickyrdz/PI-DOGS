@@ -1,6 +1,6 @@
 const URL = 'https://api.thedogapi.com/v1/breeds/';
 const axios = require('axios');
-const { Dog } = require("../db"); 
+const { Dog, Temperament, DogTemperament } = require("../db"); 
 const { API_KEY } = process.env;
 
 const getDogsById = async (req, res) => {
@@ -12,21 +12,38 @@ const getDogsById = async (req, res) => {
     let result;
 
     /*
-      si el ID se puede convertir a entero, 
-      debo buscarlo en los datos de la api de Dogs
-      ya que los ID de los perros de la Base de Datos no cumplen esa condición
+      si el ID es un string de 36 caracteres pertenece a mi base de datos, 
+      de lo contrario debo buscarlo en los datos de la api de Dogs
      */
 
-    const isDbDog = Number.isNaN(parseInt(id)); // es UUID
+    const isDbDog = id.toString().length === 36// es UUID
 
     if (isDbDog) {
-      const dbData = await Dog.findAll();
-      result = dbData.find((dog) => dog.id.toString() === id.toString());
+      // busco el perro con el id que me llega
+      result = await Dog.findOne({
+        where: {
+          id,
+        },
+        // incluyo los temperamentos asociados al perro
+        include: Temperament
+      });
+
+      // convierto el modelo que encontré a JSON para poder manipularlo porque sinó tira error al modificar propiedades
+      // agarro los temperamentos y dejo el resto de las propiedades en el spread llamado rest
+      const { Temperaments, ...rest } = result.toJSON();
+
+      // armo el resultado con los datos del rest
+      // aplico formato a los temperamentos para que sea un string unido por ',' al igual que el de la API
+      result = {
+        ...rest,
+        temperament: Temperaments.map((temp) => temp.name).join(', '),
+      }
     } else {
       const { data: externalApiData } = await axios(URL, {
         params: { api_key: API_KEY }
       });
       result = externalApiData.find((dog) => dog.id.toString() === id.toString());
+      console.log({ result });
     }
 
     // si lo encuentro, lo retorno, sino envío un NOT FOUND
