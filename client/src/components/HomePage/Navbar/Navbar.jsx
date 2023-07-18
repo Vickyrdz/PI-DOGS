@@ -4,7 +4,7 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import NavImg from "../../../assets/landingDog.png";
 import {useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import { findDogsByName } from "../../../redux/actions";
+import { changeLoading, findDogsByName } from "../../../redux/actions";
 import { useState } from "react";
 
 
@@ -19,7 +19,9 @@ export default function Navbar() {
       // si no es vacío
       if (searchValue) {
         navigate('/home'); //esto es por si estamos en detail por ejemplo y queremos buscar igual 
+        dispatch(changeLoading(true)); //dispara la info que encontró con el criterio de busqueda 
         dispatch(findDogsByName(searchValue)); //dispara la info que encontró con el criterio de busqueda 
+        setInputValue('');
       }
       
       // si quiero interpretar el criterio como id
@@ -42,9 +44,7 @@ export default function Navbar() {
        <Link to={"/home"}>
          <img className={styles.navImg} src={NavImg} alt="" />
        </Link>
-       <NavLink to={"/formpage"}>
-         <span className={styles.create}>Create Your Dog</span>
-       </NavLink>
+       <NavLink className={styles.create} to={"/formpage"}>Create your Dog</NavLink>
        <div className={styles.searchbarContainer}>
          <input className={styles.input} type="search" value={inputValue} onChange={handleInputChange} />
          <button className={styles.button} onClick={handleSearch}>Search</button>

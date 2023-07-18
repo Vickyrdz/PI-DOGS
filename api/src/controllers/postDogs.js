@@ -1,8 +1,9 @@
 const { Dog, Temperament, DogTemperament } = require("../db"); 
 
 const postDogs = async (req, res) => {
+    console.log({ b: req.body });
 
-    const { name, height, min_weight, max_weight, life_span, temperaments, image } = req.body;
+    const { name, min_height, max_height, min_weight, max_weight, life_span, temperaments, image } = req.body;
 
     try {
  
@@ -13,7 +14,7 @@ const postDogs = async (req, res) => {
         //crear
         const newDog = await Dog.create({
             name: name, 
-            height: height, 
+            height: `${min_height} - ${max_height}`, 
             weight: `${min_weight} - ${max_weight}`,
             life_span: life_span,
             image: image,

@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
-import { getAllDogs } from '../../redux/actions';
+import { getAllDogs, changeLoading } from '../../redux/actions';
 import Card from '../HomePage/Card/Card'
 import styles from "../DogList/DogList.module.css";
 import { Pagination } from "../HomePage/Pagination/Pagination";
 import { Filters } from "../HomePage/Filters/Filters";
+import { Loading } from "../Loading/Loading";
+
+const QUANTITY_FOR_PAGE = 8;
 
 export default function DogList() {
     const dispatch = useDispatch();
@@ -14,6 +17,7 @@ export default function DogList() {
     // useSelector sirve para acceder a una parte del estado de redux
     // es lo mismo que hacer mapStateToProps y recibir allDogs como prop en listado
     const dogs = useSelector((state) => state.allDogs);
+    const loading = useSelector((state) => state.loading);
     const search = useSelector((state) => state.search);
     const dogsByName = useSelector((state) => state.dogsByName);
     const currentFilter = useSelector((state) => state.currentFilter);
@@ -23,7 +27,8 @@ export default function DogList() {
 
     useEffect(() => {  //useEffect escucha cambios del componente 
         // si no tengo criterio de busqueda, traigo todo
-        dispatch(getAllDogs()); //dispacth trae la info 
+        dispatch(changeLoading(true));
+        dispatch(getAllDogs());
     }, []);
 
     useEffect(() => {
@@ -97,14 +102,18 @@ export default function DogList() {
 
                 return true;
             });
-        console.log({ newList });
         setFilteredList(newList);
     }, [dogs.length, dogsByName.length, search, currentFilter, primaryOrder, secondaryOrder]);
 
-    const [page, setPage] = useState(1);
-    const [quantityForPage, setQuantityForPage] = useState(8);
+    useEffect(() => {
+        dispatch(changeLoading(false));
+    }, [filteredList.length]);
 
-    const max = Math.ceil(filteredList.length / quantityForPage);
+    const [page, setPage] = useState(1);
+
+    const max = Math.ceil(filteredList.length / QUANTITY_FOR_PAGE);
+
+    if (loading) return <Loading />;
 
     return (
 
@@ -115,7 +124,7 @@ export default function DogList() {
             <div className={styles.dogListContainer}>
 
                 {
-                    filteredList.slice((page - 1) * quantityForPage, (page - 1) * quantityForPage + quantityForPage)
+                    filteredList.slice((page - 1) * QUANTITY_FOR_PAGE, (page - 1) * QUANTITY_FOR_PAGE + QUANTITY_FOR_PAGE)
                         .map((item) => (
                             <Card
                                 key={item.id}

@@ -8,7 +8,9 @@ export const GET_ALL_TEMPERAMENTS = "GET_ALL_TEMPERAMENTS";
 export const CHANGE_FILTER = "CHANGE_FILTER"; 
 export const RESET_FILTER = "RESET_FILTER"; 
 export const CHANGE_PRIMARY_ORDER = "CHANGE_PRIMARY_ORDER"; 
-export const CHANGE_SECONDARY_ORDER = "CHANGE_SECONDARY_ORDER"; 
+export const CHANGE_SECONDARY_ORDER = "CHANGE_SECONDARY_ORDER";
+export const CREATE_DOG = "CREATE_DOG";  
+export const CHANGE_LOADING = "CHANGE_LOADING"; 
 
 export const getAllDogs = () => {
   return async (dispatch) => {
@@ -27,8 +29,7 @@ export const getAllDogs = () => {
 
 export const getDogById = (id) => {
   return async (dispatch) => {
-    try {
-      const { data } = await axios(`http://localhost:3001/dogs/${id}`); 
+    try {      const { data } = await axios(`http://localhost:3001/dogs/${id}`); 
 
       return dispatch({
         type: GET_DOG_BY_ID,
@@ -64,8 +65,7 @@ export const findDogsByName = (searchCriteria) => {
 
 export const getAllTemperaments = () => {
   return async (dispatch) => {
-    try {
-      const { data } = await axios("http://localhost:3001/temperaments");
+    try {      const { data } = await axios("http://localhost:3001/temperaments");
 
       return dispatch({
         type: GET_ALL_TEMPERAMENTS,
@@ -109,3 +109,29 @@ export const changeSecondaryOrder = (order) => {
      payload: order 
   }
 };
+
+
+export const createNewDog = (newDogData, onDogCreated) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post('http://localhost:3001/dogs', newDogData);
+      onDogCreated(data.id);
+      return dispatch({
+        type: CREATE_DOG,
+        payload: data
+      });
+    } catch (error) {
+      throw new Error('error')
+    }
+  };
+}
+
+export const changeLoading = (newLoadingValue) => {
+  return (dispatch) => {
+    console.log({ newLoadingValue });
+    return dispatch({
+      type: CHANGE_LOADING,
+      payload: newLoadingValue,
+    });
+  }
+}

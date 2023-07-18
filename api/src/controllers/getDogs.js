@@ -22,7 +22,6 @@ const getDogs = async (req, res) => {
       // convierto el modelo que encontré a JSON para poder manipularlo porque sinó tira error al modificar propiedades
       // agarro los temperamentos y dejo el resto de las propiedades en el spread llamado rest
       const { Temperaments, ...rest } = dog.toJSON();
-
       // armo el resultado con los datos del rest
       // aplico formato a los temperamentos para que sea un string unido por ',' al igual que el de la API
       return ({
@@ -35,7 +34,7 @@ const getDogs = async (req, res) => {
     
     // Uno las listas
     const data = [
-      // ...dbData,
+      ...dbData,
       ...externalApiData
     ];
 

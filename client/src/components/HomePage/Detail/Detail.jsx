@@ -3,10 +3,11 @@ import {useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { useParams } from "react-router-dom";
-import { getDogById } from "../../../redux/actions";
+import { changeLoading, getDogById } from "../../../redux/actions";
 import decoImg from "../../../assets/Captura de Pantalla 2023-07-14 a la(s) 15.37.49.png"
 import styles from "../Detail/Detail.module.css"; 
 import { Backtohome } from "../../Backtohome/Backtohome";
+import { Loading } from "../../Loading/Loading";
 
 
 export default function Detail() {
@@ -17,12 +18,20 @@ export default function Detail() {
     // es lo mismo que hacer mapStateToProps y recibir allDogs como prop en listado
     const dogDetail = useSelector((state) => state.dogDetail);
     const dogDetailError = useSelector((state) => state.dogDetailError);
+    const loading = useSelector((state) => state.loading);
 
     useEffect(() => {  //useEffect escucha cambios del componente 
         dispatch(getDogById(params.id)); //dispacth trae la info 
     }, [params.id]);
 
-    if (dogDetailError) return <div>not found</div>
+    useEffect(() => {
+        if (loading && !dogDetail) {
+            changeLoading(false);
+        }
+    }, [loading, dogDetail]);
+
+    if (loading) return <Loading />;
+    if (dogDetailError) return <div>not found</div>;
 
     if (dogDetail === null 
         || dogDetail.id.toString() !== params.id.toString()) return null;

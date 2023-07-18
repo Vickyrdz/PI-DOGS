@@ -1,0 +1,23 @@
+.container {
+
+}
+.p{
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    color: orange;
+    font-weight: bold;
+    position: relative;
+    top: 145px;
+}
+
+.gif{
+    display: flex;
+    z-index: -1;
+    position: relative;
+    height: 150px;
+    left: 540px;
+    top: 200px;
+}

@@ -8,7 +8,6 @@
 .title{
     font-size: 50px;
     position: relative;
-    padding-top: 30px;
     color: white;
     text-shadow: -2px 0 #111827, 0 -2px #111827, 2px 0 #111827, 0 2px #111827, 2px 2px #111827, -2px -2px #111827, -2px 2px #111827, 2px -2px #111827, 6px 6px #fcb900;   
 }
@@ -23,7 +22,7 @@
     display: flex;
     flex-direction: row;
     position: relative;
-    left: 180px;
+    left: 190px;
     height: 550px;
     bottom: 30px;
 }
@@ -39,7 +38,8 @@
     border: 2px solid orange;
     border-radius: 20px;
     width: 350px;
-    top: 30px;
+    top: 10px;
+    height: 500px;
 }
 
 .button {
@@ -53,5 +53,41 @@
     font-weight: bold;
     padding: 10px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
+.button:disabled{
+    cursor: no-drop;
+    background-color: lightgrey;
+}
+
+.text {
+    font-size: 20px;
+    width: 300px;
+    display: flex;
+    color: black;
+}
+
+
+.inputLarge{
+    width: -webkit-fill-available;
+    border-radius: 3px;
+    border: 1px solid black;
+    height: 20px;
+}
+
+.inputSmall{
+    width: 100px;
+    border: 1px solid;
+    border-radius: 3px;
+    height: 20px;
+}
+
+.inputLeft{
+    width: 100px;
+    border: 1px solid;
+    border-radius: 3px;
+    height: 20px;
+    position: relative;
+    left: 20px;
+}

@@ -1,23 +1,23 @@
-import { 
-  GET_ALL_DOGS, 
-  GET_DOG_BY_ID, 
+import {
+  GET_ALL_DOGS,
+  GET_DOG_BY_ID,
   GET_DOG_BY_ID_ERROR,
   FIND_DOGS_BY_NAME,
   GET_ALL_TEMPERAMENTS,
   CHANGE_FILTER,
   RESET_FILTER,
   CHANGE_PRIMARY_ORDER,
-  CHANGE_SECONDARY_ORDER
+  CHANGE_SECONDARY_ORDER,
+  CREATE_DOG,
+  CHANGE_LOADING,
 } from "./actions";
 
 const initialState = {
-  allDogs: [],   
-  dogDetail: {}, 
+  allDogs: [],
+  dogDetail: {},
 };
-
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-
     case GET_ALL_DOGS:
       return {
         ...state,
@@ -27,7 +27,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         dogDetail: action.payload,
-        dogDetailError: false
+        dogDetailError: false,
       };
     case GET_DOG_BY_ID_ERROR:
       return {
@@ -43,9 +43,9 @@ const rootReducer = (state = initialState, action) => {
     case GET_ALL_TEMPERAMENTS:
       return {
         ...state,
-        getTemperaments: action.payload, 
+        getTemperaments: action.payload,
       };
-    case CHANGE_FILTER: 
+    case CHANGE_FILTER:
       return {
         ...state,
         currentFilter: action.payload,
@@ -54,10 +54,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         currentFilter: {
-          tempName: 'ALL',
-          origin: 'ALL',
+          tempName: "ALL",
+          origin: "ALL",
         },
-      }; 
+        search: '',
+      };
     case CHANGE_PRIMARY_ORDER:
       return {
         ...state,
@@ -68,7 +69,17 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         secondaryOrder: action.payload,
       };
-  
+    case CREATE_DOG:
+      return {
+        ...state,
+        allDogs: [...state.allDogs, action.payload],
+      };
+    case CHANGE_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+
     default:
       return {
         allDogs: [],
@@ -78,13 +89,14 @@ const rootReducer = (state = initialState, action) => {
         dogDetailError: false,
         getTemperaments: [],
         currentFilter: {
-          tempName: 'ALL',
-          source: 'ALL',
+          tempName: "ALL",
+          source: "ALL",
         },
         primaryOrder: "A-Z",
         secondaryOrder: "LIGHTER",
-      }
-    }
-}
+        loading: true,
+      };
+  }
+};
 
 export default rootReducer;
