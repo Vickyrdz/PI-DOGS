@@ -1,13 +1,20 @@
 const axios = require("axios"); 
 const { Temperament } = require("../db"); 
+const { API_KEY } = process.env;
 
 const getAllTemps = async (req, res) => {
     try {
-        const { data } = await axios("https://api.thedogapi.com/v1/breeds");
+        // todos los perros de la API
+        const { data } = await axios("https://api.thedogapi.com/v1/breeds", {
+            params: { api_key: API_KEY }
+        });
 
+        // de cada uno agarro el temperamento y lo separo por ','
+        // con esa lista de temperamentos separados veo si ya lo guardé en mi BD
+        // si no, lo creo para tenerlo guardado para próximas búsquedas
         data.forEach(dog => {
             if (dog.temperament) {
-                let temps = dog.temperament.split(", "); 
+                let temps = dog.temperament.split(","); 
                 temps.forEach(dogTemps => {
                     //busca en el modelo el temperamento y sino lo crea y agrega
                     Temperament.findOrCreate({
@@ -17,17 +24,16 @@ const getAllTemps = async (req, res) => {
             }
         });
 
+        // busco los de la BD
         const foundTemps = await Temperament.findAll(); 
         
         return foundTemps.sort((a,b) => a.id - b.id) //se ordenan de forma ascendente 
-        ? res.status(200).json(foundTemps)
-        : res.status(400).send("Temperament not found"); 
+            ? res.status(200).json(foundTemps)
+            : res.status(400).send("Temperament not found"); 
 
     } catch (error) {
         res.status(500).send(error.message);
-    }
+    }  
 }
 
-module.exports = {
-    getAllTemps
-}; 
+module.exports = getAllTemps; 

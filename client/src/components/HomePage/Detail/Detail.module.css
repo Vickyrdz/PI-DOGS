@@ -13,12 +13,14 @@
     font-size: 60px;
     color: white;
     padding-bottom: 90px;
+    bottom: 30px;
 }
 .rows{
     display: flex;
     flex-direction: row;
     position: relative;
-    bottom: 30px;
+    bottom: 70px;
+    left: 50px;
 }
 
 .right{

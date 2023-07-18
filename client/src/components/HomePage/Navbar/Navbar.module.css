@@ -25,7 +25,12 @@
     border-radius: 5px;
     padding: 5px 15px 5px 15px;
     border-color: #FF9800;
+    outline: none;
+    color: orange;
+    font-weight: bold;
+    font-size: 15px;
 }
+
 
 .button {
     background-color: transparent;

@@ -22,11 +22,11 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       height: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       weight: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       life_span: {

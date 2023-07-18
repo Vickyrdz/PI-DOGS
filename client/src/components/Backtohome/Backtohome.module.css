@@ -1,0 +1,26 @@
+.container{
+    display: flex;
+    position: relative;
+    left: 10px;
+    width: 100%;
+}
+
+.smallContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.link {
+    text-decoration: none;
+    outline: none;
+}
+
+.p {
+    color: orange;
+    font-weight: bold;
+}
+
+.icon{
+    height: 20px;
+    align-self: center;
+}

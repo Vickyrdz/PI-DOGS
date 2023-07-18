@@ -1,0 +1,57 @@
+.formpageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+}
+
+.title{
+    font-size: 50px;
+    position: relative;
+    padding-top: 30px;
+    color: white;
+    text-shadow: -2px 0 #111827, 0 -2px #111827, 2px 0 #111827, 0 2px #111827, 2px 2px #111827, -2px -2px #111827, -2px 2px #111827, 2px -2px #111827, 6px 6px #fcb900;   
+}
+
+.cardContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.right{
+   
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    left: 180px;
+    height: 550px;
+    bottom: 30px;
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    position: relative;
+    right: 340px;
+    align-items: center;
+    background-color: white;
+    border: 2px solid orange;
+    border-radius: 20px;
+    width: 350px;
+    top: 30px;
+}
+
+.button {
+    display: flex;
+    position: relative;
+    margin-bottom: 50px;
+    border: none;
+    color: white;
+    background-color: #fbb900;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+}
+

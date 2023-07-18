@@ -4,10 +4,9 @@ import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { useParams } from "react-router-dom";
 import { getDogById } from "../../../redux/actions";
-import bubble1 from "../../../assets/bubble1.png"; 
-import bubble2 from "../../../assets/bubble2.png"; 
 import decoImg from "../../../assets/Captura de Pantalla 2023-07-14 a la(s) 15.37.49.png"
 import styles from "../Detail/Detail.module.css"; 
+import { Backtohome } from "../../Backtohome/Backtohome";
 
 
 export default function Detail() {
@@ -21,7 +20,7 @@ export default function Detail() {
 
     useEffect(() => {  //useEffect escucha cambios del componente 
         dispatch(getDogById(params.id)); //dispacth trae la info 
-    }, []);
+    }, [params.id]);
 
     if (dogDetailError) return <div>not found</div>
 
@@ -29,15 +28,16 @@ export default function Detail() {
         || dogDetail.id.toString() !== params.id.toString()) return null;
 
     const heightToDisplay = typeof dogDetail.height === 'object' 
-        ? dogDetail.height.imperial : dogDetail.height;
+        ? dogDetail.height.metric : dogDetail.height;
     const weightToDisplay = typeof dogDetail.weight === 'object' 
-        ? dogDetail.weight.imperial : dogDetail.weight;
+        ? dogDetail.weight.metric : dogDetail.weight;
     const imageToDisplay = typeof dogDetail.image === 'object' 
         ? dogDetail.image.url : dogDetail.image;
 
 
     return (
         <div className={styles.detailContainer}>
+            <Backtohome/>
             <h1 className={styles.title}>{dogDetail.name}</h1>
             <div className={styles.rows}>
                 <div className={styles.right}>

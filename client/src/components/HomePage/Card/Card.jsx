@@ -12,8 +12,8 @@ function Card ({
     life_span
 }) {
     //Esto es porque en la api aparece esa info como objeto 
-    const heightToDisplay = typeof height === 'object' ? height.imperial : height;
-    const weightToDisplay = typeof weight === 'object' ? weight.imperial : weight;
+    const heightToDisplay = typeof height === 'object' ? height.metric : height;
+    const weightToDisplay = typeof weight === 'object' ? weight.metric : weight;
     const imageToDisplay = typeof image === 'object' ? image.url : image;
 
     return (

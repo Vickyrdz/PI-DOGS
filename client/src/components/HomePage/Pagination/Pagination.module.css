@@ -24,12 +24,20 @@
 
 .input{
     margin: 5px;
-    width: 50px;
+    width: 30px;
     text-align: center;
     height: 20px;
     display: flex;
     align-self: center;
+    outline: none;
 }
+
+.input::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+  }
+
+
 
 .p{
     font-size: 15px;

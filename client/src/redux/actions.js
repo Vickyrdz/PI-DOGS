@@ -3,6 +3,12 @@ import axios from "axios";
 export const GET_ALL_DOGS = "GET_ALL_DOGS";
 export const GET_DOG_BY_ID = "GET_DOG_BY_ID";
 export const GET_DOG_BY_ID_ERROR = "GET_DOG_BY_ID_ERROR";
+export const FIND_DOGS_BY_NAME = "FIND_DOGS_BY_NAME";
+export const GET_ALL_TEMPERAMENTS = "GET_ALL_TEMPERAMENTS"; 
+export const CHANGE_FILTER = "CHANGE_FILTER"; 
+export const RESET_FILTER = "RESET_FILTER"; 
+export const CHANGE_PRIMARY_ORDER = "CHANGE_PRIMARY_ORDER"; 
+export const CHANGE_SECONDARY_ORDER = "CHANGE_SECONDARY_ORDER"; 
 
 export const getAllDogs = () => {
   return async (dispatch) => {
@@ -33,3 +39,73 @@ export const getDogById = (id) => {
     }
   }
 }
+
+export const findDogsByName = (searchCriteria) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios("http://localhost:3001/dogs/", {
+        params: {
+          name: searchCriteria,
+        }
+      });
+      return dispatch({
+        type: FIND_DOGS_BY_NAME,
+        payload: {
+          searchCriteria,
+          data,
+        },
+      });
+    } catch (error) {
+      console.log({ error });
+      alert("Not Found");
+    }
+  };
+}; 
+
+export const getAllTemperaments = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios("http://localhost:3001/temperaments");
+
+      return dispatch({
+        type: GET_ALL_TEMPERAMENTS,
+        payload: data,
+      });
+
+    } catch (error) {
+      
+    }
+  }
+};
+
+export const changeFilters = (newFilters) => {
+  return (dispatch) => {
+    return dispatch({
+      type: CHANGE_FILTER,
+      payload: newFilters,
+    });
+  }
+}
+
+export const resetFilters = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: RESET_FILTER,
+    });
+  }
+}
+
+
+export const changePrimaryOrder = (order) => {
+  return {
+     type: CHANGE_PRIMARY_ORDER,
+     payload: order 
+  }
+};
+
+export const changeSecondaryOrder = (order) => {
+  return {
+     type: CHANGE_SECONDARY_ORDER,
+     payload: order 
+  }
+};
