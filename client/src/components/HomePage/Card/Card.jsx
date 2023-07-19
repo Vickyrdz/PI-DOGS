@@ -11,7 +11,7 @@ function Card ({
     weight,
     life_span
 }) {
-    //Esto es porque en la api aparece esa info como objeto 
+    //Esto es porque en la api aparece esa info como objeto y quiero acceder a las propiedades 
     const heightToDisplay = typeof height === 'object' ? height.metric : height;
     const weightToDisplay = typeof weight === 'object' ? weight.metric : weight;
     const imageToDisplay = typeof image === 'object' ? image.url : image;

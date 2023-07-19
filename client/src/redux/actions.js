@@ -7,8 +7,7 @@ export const FIND_DOGS_BY_NAME = "FIND_DOGS_BY_NAME";
 export const GET_ALL_TEMPERAMENTS = "GET_ALL_TEMPERAMENTS"; 
 export const CHANGE_FILTER = "CHANGE_FILTER"; 
 export const RESET_FILTER = "RESET_FILTER"; 
-export const CHANGE_PRIMARY_ORDER = "CHANGE_PRIMARY_ORDER"; 
-export const CHANGE_SECONDARY_ORDER = "CHANGE_SECONDARY_ORDER";
+export const CHANGE_ORDER = "CHANGE_ORDER"; 
 export const CREATE_DOG = "CREATE_DOG";  
 export const CHANGE_LOADING = "CHANGE_LOADING"; 
 
@@ -96,20 +95,12 @@ export const resetFilters = () => {
 }
 
 
-export const changePrimaryOrder = (order) => {
+export const changeOrder = (order) => {
   return {
-     type: CHANGE_PRIMARY_ORDER,
+     type: CHANGE_ORDER,
      payload: order 
   }
 };
-
-export const changeSecondaryOrder = (order) => {
-  return {
-     type: CHANGE_SECONDARY_ORDER,
-     payload: order 
-  }
-};
-
 
 export const createNewDog = (newDogData, onDogCreated) => {
   return async (dispatch) => {
@@ -128,7 +119,6 @@ export const createNewDog = (newDogData, onDogCreated) => {
 
 export const changeLoading = (newLoadingValue) => {
   return (dispatch) => {
-    console.log({ newLoadingValue });
     return dispatch({
       type: CHANGE_LOADING,
       payload: newLoadingValue,

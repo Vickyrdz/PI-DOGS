@@ -6,8 +6,7 @@ import {
   GET_ALL_TEMPERAMENTS,
   CHANGE_FILTER,
   RESET_FILTER,
-  CHANGE_PRIMARY_ORDER,
-  CHANGE_SECONDARY_ORDER,
+  CHANGE_ORDER,
   CREATE_DOG,
   CHANGE_LOADING,
 } from "./actions";
@@ -57,17 +56,13 @@ const rootReducer = (state = initialState, action) => {
           tempName: "ALL",
           origin: "ALL",
         },
+        order: 'A-Z',
         search: '',
       };
-    case CHANGE_PRIMARY_ORDER:
+    case CHANGE_ORDER:
       return {
         ...state,
-        primaryOrder: action.payload,
-      };
-    case CHANGE_SECONDARY_ORDER:
-      return {
-        ...state,
-        secondaryOrder: action.payload,
+        order: action.payload,
       };
     case CREATE_DOG:
       return {
@@ -92,8 +87,7 @@ const rootReducer = (state = initialState, action) => {
           tempName: "ALL",
           source: "ALL",
         },
-        primaryOrder: "A-Z",
-        secondaryOrder: "LIGHTER",
+        order: "A-Z",
         loading: true,
       };
   }

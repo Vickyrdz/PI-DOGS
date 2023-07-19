@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
-import { changeFilters, getAllTemperaments, resetFilters, changeSecondaryOrder, changePrimaryOrder } from "../../../redux/actions";
+import { changeFilters, getAllTemperaments, resetFilters, changeOrder } from "../../../redux/actions";
 import { useSelector } from "react-redux";
 import styles from "./Filters.module.css";
 
@@ -10,8 +10,7 @@ export const Filters = () => {
     const dispatch = useDispatch();
     const [tempFilter, setTempFilter] = useState('ALL');
     const [originFilter, setOriginFilter] = useState('ALL');
-    const [primaryOrder, setPrimaryOrder] = useState('A-Z');
-    const [secondaryOrder, setSecondaryOrder] = useState('LIGHTER');
+    const [order, setOrder] = useState('A-Z');
 
     useEffect(() => {  //useEffect escucha cambios del componente 
         dispatch(getAllTemperaments()); //dispacth trae la info 
@@ -27,12 +26,8 @@ export const Filters = () => {
         setOriginFilter(event.target.value);
     };
 
-    function handlePrimaryOrderChange(event) {
-        setPrimaryOrder(event.target.value);
-    };
-
-    function handleSecondaryOrderChange(event) {
-        setSecondaryOrder(event.target.value);
+    function handleOrderChange(event) {
+        setOrder(event.target.value);
     };
 
     const handleApply = () => {
@@ -40,16 +35,14 @@ export const Filters = () => {
             tempName: tempFilter,
             source: originFilter,
         }));
-        dispatch(changePrimaryOrder(primaryOrder));
-        dispatch(changeSecondaryOrder(secondaryOrder));
+        dispatch(changeOrder(order));
     }
 
     const handleReset = () => {
         dispatch(resetFilters());
         setTempFilter('ALL');
         setOriginFilter('ALL');
-        setPrimaryOrder('A-Z');
-        setPrimaryOrder('LIGHTER');
+        setOrder('A-Z');
     }
 
     return (
@@ -67,12 +60,9 @@ export const Filters = () => {
                 <option key="origin_DB" value="DB">Database</option>
             </select>
 
-            <select className={styles.selects} placeholder="Order by" onChange={handlePrimaryOrderChange} value={primaryOrder}>
+            <select className={styles.selects} placeholder="Order by" onChange={handleOrderChange} value={order}>
                 <option key="A-Z" value="A-Z">A-Z</option>
                 <option key="Z-A" value="Z-A">Z-A</option>
-            </select>
-
-            <select className={styles.selects} placeholder="Order by" onChange={handleSecondaryOrderChange} value={secondaryOrder}>
                 <option key="LIGHTER" value="LIGHTER">Less Weight</option>
                 <option key="HEAVIER" value="HEAVIER">More Weight</option>
             </select>

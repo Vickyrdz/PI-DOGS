@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    bottom: 10px;
    
 }
 
@@ -24,7 +26,7 @@
     position: relative;
     left: 190px;
     height: 550px;
-    bottom: 30px;
+    bottom: 20px;
 }
 
 .left{
@@ -39,7 +41,7 @@
     border-radius: 20px;
     width: 350px;
     top: 10px;
-    height: 500px;
+    height: 540px;
 }
 
 .button {
@@ -54,6 +56,7 @@
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+    top: 30px;
 }
 
 .button:disabled{
@@ -62,10 +65,12 @@
 }
 
 .text {
-    font-size: 20px;
+    font-size: 15px;
     width: 300px;
     display: flex;
     color: black;
+    position: relative;
+    top: 5px;
 }
 
 
@@ -91,3 +96,40 @@
     position: relative;
     left: 20px;
 }
+
+.p{
+    color: red;
+    font-size: 12px;
+}
+
+.blockContainerName {
+    position: relative;
+    height: 100px;
+}
+
+.blockContainerH {
+    position: relative;
+    bottom: 20px;
+    height: 20%;
+}
+
+.blockContainerW {
+    position: relative;
+    bottom: 40px;
+}
+
+.blockContainerLife {
+    position: relative;
+    bottom: 60px;
+}
+
+.blockContainerTemp {
+    position: relative;
+    bottom: 80px;
+}
+
+.blockContainerImage{
+    position: relative;
+    bottom: 100px;
+}
+

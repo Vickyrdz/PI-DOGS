@@ -18,10 +18,10 @@ export default function Navbar() {
     useEffect(() => {  //useEffect escucha cambios del componente 
       // si no es vacío
       if (searchValue) {
-        navigate('/home'); //esto es por si estamos en detail por ejemplo y queremos buscar igual 
-        dispatch(changeLoading(true)); //dispara la info que encontró con el criterio de busqueda 
+        navigate('/home'); //esto es por si estamos en detail por ejemplo y queremos buscar igual, nos dirige a la home
+        dispatch(changeLoading(true)); //
         dispatch(findDogsByName(searchValue)); //dispara la info que encontró con el criterio de busqueda 
-        setInputValue('');
+        setInputValue(''); //vuelve a vaciarse el input luego de buscar
       }
       
       // si quiero interpretar el criterio como id

@@ -12,28 +12,31 @@ import { Loading } from "../Loading/Loading";
 const QUANTITY_FOR_PAGE = 8;
 
 export default function DogList() {
+    const [page, setPage] = useState(1);
     const dispatch = useDispatch();
 
     // useSelector sirve para acceder a una parte del estado de redux
     // es lo mismo que hacer mapStateToProps y recibir allDogs como prop en listado
+    
     const dogs = useSelector((state) => state.allDogs);
     const loading = useSelector((state) => state.loading);
     const search = useSelector((state) => state.search);
     const dogsByName = useSelector((state) => state.dogsByName);
     const currentFilter = useSelector((state) => state.currentFilter);
-    const primaryOrder = useSelector((state) => state.primaryOrder);
-    const secondaryOrder = useSelector((state) => state.secondaryOrder);
+    const order = useSelector((state) => state.order);
     const [filteredList, setFilteredList] = useState([]);
 
     useEffect(() => {  //useEffect escucha cambios del componente 
         // si no tengo criterio de busqueda, traigo todo
         dispatch(changeLoading(true));
         dispatch(getAllDogs());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         // si tengo criterio de busqueda, muestro la lista filtrada, sino la completa
         const list = search ? dogsByName : dogs;
+        setPage(1);
         const newList = list
             .filter((dog) => {
                 if (currentFilter.tempName === 'ALL') return true;
@@ -47,69 +50,56 @@ export default function DogList() {
                 return !dog.source;
             })
             .sort((aDog, bDog) => {
-                const AZLessWeight = primaryOrder === 'A-Z' && secondaryOrder === 'LIGHTER';
-                const AZMoreWeight = primaryOrder === 'A-Z' && secondaryOrder === 'HEAVIER';
-                const ZALessWeight = primaryOrder === 'Z-A' && secondaryOrder === 'LIGHTER';
-                const ZAMoreWeight = primaryOrder === 'Z-A' && secondaryOrder === 'HEAVIER';
+                if (!list.length > 1) return 0;
+                const AZ = order === 'A-Z';
+                const ZA = order === 'Z-A';
+                const lessWeight = order === 'LIGHTER';
+                const moreWeight = order === 'HEAVIER';
 
-                let aDogWeight;
-                let bDogWeight;
+                if (AZ) return aDog.name.localeCompare(bDog.name);
+                else if (ZA) return bDog.name.localeCompare(aDog.name);
+                else {
+                    const pesoPerroA = aDog.source === 'DB' ? aDog.weight : aDog.weight.metric;
+                    const pesoPerroB = bDog.source === 'DB' ? bDog.weight : bDog.weight.metric;
 
-                if (aDog.source === 'DB') {
-                    const aWeights = aDog.weight.split('-').map((weight) => weight.trim());
-                    aDogWeight = aWeights[1];
-                } else {
-                    if (Number.isNaN(parseInt(aDog.weight.metric))) aDogWeight = 0;
+                    //valido si no son NaN como string
+                    const pesoEsNaNPerroA = pesoPerroA === 'NaN';
+                    const pesoEsNaNPerroB = pesoPerroB === 'NaN';
 
-                    else {
-                        const aWeights = aDog.weight.metric.split('-').map((weight) => weight.trim());
-                        const validMin = !Number.isNaN(parseInt(aWeights[0]));
-                        const validMax = !Number.isNaN(parseInt(aWeights[1]));
-                        if (validMax) aDogWeight = aWeights[1];
-                        else if (validMin) aDogWeight = aWeights[0];
-                        else aDogWeight = 0;
-                    }
+                    // trato de obtener los minimos y maximos del peso como array, si ambos existen el length va a ser 2, sino 1
+                    const minimoMaximoPerroA = pesoPerroA.split('-');
+                    const minimoMaximoPerroB = pesoPerroB.split('-');
+
+                    const unicoPesoPerroA = minimoMaximoPerroA.length === 1;
+                    const unicoPesoPerroB = minimoMaximoPerroB.length === 1;
+
+                    // si el peso es NaN uso 0 para poder ordenar bien
+                    // si es un solo número lo trato como maximo
+                    // si son dos números, tomo el de la derecha ya que es el mayor
+                    const valorPesoMaximoPerroA = pesoEsNaNPerroA ? 0 : (unicoPesoPerroA ? minimoMaximoPerroA[0] : minimoMaximoPerroA[1]);
+                    const valorPesoMaximoPerroB = pesoEsNaNPerroB ? 0 : (unicoPesoPerroB ? minimoMaximoPerroB[0] : minimoMaximoPerroB[1]);
+
+                    const numeroPesoMaximoPerroA = Number.parseInt(valorPesoMaximoPerroA);
+                    const pesoFinalPerroA = Number.isNaN(numeroPesoMaximoPerroA) ? 0 : numeroPesoMaximoPerroA;
+                    
+                    const numeroPesoMaximoPerroB = Number.parseInt(valorPesoMaximoPerroB);
+                    const pesoFinalPerroB = Number.isNaN(numeroPesoMaximoPerroB) ? 0 : numeroPesoMaximoPerroB;
+
+                    if (lessWeight) return pesoFinalPerroA - pesoFinalPerroB;
+                    else if (moreWeight) return pesoFinalPerroB - pesoFinalPerroA;
+
+                    return 0;
                 }
 
-                if (bDog.source === 'DB') {
-                    const bWeights = bDog.weight.split('-').map((weight) => weight.trim());
-                    bDogWeight = bWeights[1];
-                } else {
-                    if (Number.isNaN(parseInt(bDog.weight.metric))) bDogWeight = 0;
-
-                    else {
-                        const bWeights = bDog.weight.metric.split('-').map((weight) => weight.trim());
-                        const validMin = !Number.isNaN(parseInt(bWeights[0]));
-                        const validMax = !Number.isNaN(parseInt(bWeights[1]));
-                        if (validMax) bDogWeight = bWeights[1];
-                        else if (validMin) bDogWeight = bWeights[0];
-                        else bDogWeight = 0;
-                    }
-                }
-
-                if (AZLessWeight) {
-                    return (aDogWeight - bDogWeight || aDog.name.localeCompare(bDog.name));
-                }
-                else if (ZALessWeight) {
-                    return (aDogWeight - bDogWeight || bDog.name.localeCompare(aDog.name));
-                }
-                else if (AZMoreWeight) {
-                    return (bDogWeight - aDogWeight || aDog.name.localeCompare(bDog.name));
-                }
-                else if (ZAMoreWeight) {
-                    return (bDogWeight - aDogWeight || bDog.name.localeCompare(aDog.name));
-                }
-
-                return true;
             });
         setFilteredList(newList);
-    }, [dogs.length, dogsByName.length, search, currentFilter, primaryOrder, secondaryOrder]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dogs.length, dogsByName.length, search, currentFilter, order]);
 
     useEffect(() => {
         dispatch(changeLoading(false));
-    }, [filteredList.length]);
-
-    const [page, setPage] = useState(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filteredList]);
 
     const max = Math.ceil(filteredList.length / QUANTITY_FOR_PAGE);
 

@@ -25,7 +25,7 @@ export default function Detail() {
     }, [params.id]);
 
     useEffect(() => {
-        if (loading && !dogDetail) {
+        if (!loading && dogDetail) {
             changeLoading(false);
         }
     }, [loading, dogDetail]);
@@ -33,9 +33,12 @@ export default function Detail() {
     if (loading) return <Loading />;
     if (dogDetailError) return <div>not found</div>;
 
+    //
     if (dogDetail === null 
         || dogDetail.id.toString() !== params.id.toString()) return null;
 
+
+    //viene como objeto y quiero la propiedad 
     const heightToDisplay = typeof dogDetail.height === 'object' 
         ? dogDetail.height.metric : dogDetail.height;
     const weightToDisplay = typeof dogDetail.weight === 'object' 
