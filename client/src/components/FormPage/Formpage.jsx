@@ -1,11 +1,13 @@
 import React from "react";
 import styles from "./Formpage.module.css";
-import decoImg from "../../../src/assets/Captura de Pantalla 2023-07-14 a la(s) 15.37.49.png"
+import decoImg from "../../../src/assets/decoFormpage.png"
 import { Backtohome } from "../Backtohome/Backtohome";
 import { createNewDog } from "../../redux/actions";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Messagebox } from "./Messagebox";
+import { useEffect } from "react";
 
 export const Formpage = () => {
     const dispatch = useDispatch();
@@ -20,12 +22,21 @@ export const Formpage = () => {
     const [temperaments, setTemperaments] = useState("");
     const [image, setImage] = useState("");
 
+    const [newDogId, setNewDogId] = useState(false);
 
     // Este es para que una vez creado te dirija al detalle del perro recien creado
     const onDogCreated = (newDogId) => {
-        alert("Your dogs was successfully created");
-        navigate(`/detail/${newDogId}`);
+        setNewDogId(newDogId);
     }
+
+    useEffect(() => {
+        if (newDogId) {
+            setTimeout(() => {
+                setNewDogId('');
+                navigate(`/detail/${newDogId}`);
+            }, 1500);
+        }
+    }, [newDogId])
 
     // mandar siemre y cuando ningun espacio este vacio 
     const handleSubmit = (event) => {
@@ -95,9 +106,12 @@ export const Formpage = () => {
     const inputInvalidTemperaments = !temperaments;
     const inputInvalidImage = !image; 
 
+    const displayMessage = !!newDogId;
+    
     return (
         <div className={styles.formpageContainer}>
             <Backtohome />
+            { displayMessage && <Messagebox /> }
             <h1 className={styles.title}>¡Create your dog!</h1>
 
             <div className={styles.cardContainer}>
@@ -109,37 +123,37 @@ export const Formpage = () => {
                         <div className={styles.blockContainerName}>
                             <h2 className={styles.text}>Name</h2>
                             <input className={styles.inputLarge}  type="text" value={name && name} placeholder="Insert name" onChange={handleNameChange} />
-                            <p className={styles.p}>{inputInvalidName ? ("This field is required") : " "}</p>
+                            <div className={styles.p}>{inputInvalidName ? ("This field is required") : ("")}</div>
                         </div>
                         <div className={styles.blockContainerH}>
                             <h2 className={styles.text}>Height</h2>
                             <input className={styles.inputSmall} placeholder="Min height" type="number" value={minHeight && minHeight} onChange={handleMinHeightChange} />
                             <input className={styles.inputLeft} placeholder="Max height" type="number" value={maxHeight && maxHeight} onChange={handleMaxHeightChange} />
-                            <p className={styles.p}>{inputInvalidHeight && ("Both fields are required")}</p>
+                            <div className={styles.p}>{inputInvalidHeight && ("Both fields are required")}</div>
 
                         </div>
                         <div className={styles.blockContainerW}>
                             <h2 className={styles.text}>Weight</h2>
                             <input className={styles.inputSmall} placeholder="Min weight" type="number" value={minWeight && minWeight} onChange={handleMinWeightChange} />
                             <input className={styles.inputLeft} placeholder="Max weight" type="number" value={maxWeight && maxWeight} onChange={handleMaxWeightChange} />
-                            <p className={styles.p}>{inputInvalidWeight&& ("Both fields are required")}</p>
+                            <div className={styles.p}>{inputInvalidWeight&& ("Both fields are required")}</div>
                         </div>
                         <div className={styles.blockContainerLife}>
                             <h2 className={styles.text}>Life Span</h2>
                             <input className={styles.inputLarge} placeholder="Only numbers" type="number" value={life && life} onChange={handleLifeChange} />
-                            <p className={styles.p}>{inputInvalidLife && ("This field is required")}</p>
+                            <div className={styles.p}>{inputInvalidLife && ("This field is required")}</div>
 
                         </div>
                         <div className={styles.blockContainerTemp}>
                             <h2 className={styles.text}>Temperaments</h2>
                             <input className={styles.inputLarge} type="text" placeholder="Example: Funny, obedient, cuddly"  value={temperaments && temperaments} onChange={handleTemperamentsChange}/>
-                            <p className={styles.p}>{inputInvalidTemperaments && ("This field is required")}</p>
+                            <div className={styles.p}>{inputInvalidTemperaments && ("This field is required")}</div>
 
                         </div>
                         <div className={styles.blockContainerImage}>
                             <h2 className={styles.text}>Image- Use URL</h2>
                             <input className={styles.inputLarge} value={image && image} type="url" onChange={handleImageChange} />
-                            <p className={styles.p}>{inputInvalidImage && ("This field is required")}</p>
+                            <div className={styles.p}>{inputInvalidImage && ("This field is required")}</div>
 
                         </div>
                     </div>
@@ -147,5 +161,5 @@ export const Formpage = () => {
             </div>
             <button type="submit" className={styles.button} disabled={someFieldEmpty } onClick={handleSubmit}>Create</button>
         </div>
-    )
+    );
 }

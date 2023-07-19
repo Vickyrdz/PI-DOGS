@@ -41,7 +41,7 @@
     border-radius: 20px;
     width: 350px;
     top: 10px;
-    height: 540px;
+    height: 500px;
 }
 
 .button {
@@ -56,7 +56,6 @@
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    top: 30px;
 }
 
 .button:disabled{
@@ -100,6 +99,7 @@
 .p{
     color: red;
     font-size: 12px;
+    min-height: 30px;
 }
 
 .blockContainerName {

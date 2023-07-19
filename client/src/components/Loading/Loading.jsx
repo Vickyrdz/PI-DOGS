@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Loading.module.css";
-import gif from "../../assets/GIF LOADING - Dog chases his tail.gif";
+import gif from "../../assets/loadingGif.gif";
 
 export const Loading = () => {
     return (

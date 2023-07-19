@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { useParams } from "react-router-dom";
 import { changeLoading, getDogById } from "../../../redux/actions";
-import decoImg from "../../../assets/Captura de Pantalla 2023-07-14 a la(s) 15.37.49.png"
+import decoImg from "../../../assets/decoFormpage.png"
 import styles from "../Detail/Detail.module.css"; 
 import { Backtohome } from "../../Backtohome/Backtohome";
 import { Loading } from "../../Loading/Loading";
@@ -25,13 +25,13 @@ export default function Detail() {
     }, [params.id]);
 
     useEffect(() => {
-        if (!loading && dogDetail) {
-            changeLoading(false);
+        if (loading && dogDetail) {
+            dispatch(changeLoading(false));
         }
     }, [loading, dogDetail]);
 
     if (loading) return <Loading />;
-    if (dogDetailError) return <div>not found</div>;
+    if (dogDetailError) return <div>Not Found</div>;
 
     // esto es para no mostrar el detalle del perro anterior
     if (dogDetail === null 
