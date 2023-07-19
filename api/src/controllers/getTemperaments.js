@@ -27,9 +27,8 @@ const getAllTemps = async (req, res) => {
         // busco los de la BD
         const foundTemps = await Temperament.findAll(); 
         
-        return foundTemps.sort((a,b) => a.id - b.id) //se ordenan de forma ascendente 
-            ? res.status(200).json(foundTemps)
-            : res.status(400).send("Temperament not found"); 
+        const sortedFoundTemps = foundTemps.sort((a,b) => a.id - b.id) //se ordenan de forma ascendente 
+        return res.status(200).json(sortedFoundTemps);
 
     } catch (error) {
         res.status(500).send(error.message);

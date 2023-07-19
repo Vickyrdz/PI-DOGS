@@ -16,7 +16,7 @@ const getDogsById = async (req, res) => {
       de lo contrario debo buscarlo en los datos de la api de Dogs
      */
 
-    const isDbDog = id.toString().length === 36// es UUID
+    const isDbDog = id.toString().length === 36 // es UUID
 
     if (isDbDog) {
       // busco el perro con el id que me llega
@@ -39,11 +39,12 @@ const getDogsById = async (req, res) => {
         temperament: Temperaments.map((temp) => temp.name).join(', '),
       }
     } else {
-      const { data: externalApiData } = await axios(URL, {
+      const { data: externalApiData } = await axios(`${URL}`, {
         params: { api_key: API_KEY }
       });
+      // busco el perro que tenga el id que recibí por parametro en la lista completa
+      // ya que en el readme decía que no podíamos utilizar el endpoint de búsqueda por id
       result = externalApiData.find((dog) => dog.id.toString() === id.toString());
-      console.log({ result });
     }
 
     // si lo encuentro, lo retorno, sino envío un NOT FOUND

@@ -54,7 +54,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         currentFilter: {
           tempName: "ALL",
-          origin: "ALL",
+          source: "ALL",
         },
         order: 'A-Z',
         search: '',

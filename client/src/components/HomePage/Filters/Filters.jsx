@@ -1,16 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
-import { changeFilters, getAllTemperaments, resetFilters, changeOrder } from "../../../redux/actions";
 import { useSelector } from "react-redux";
+import { changeFilters, getAllTemperaments, resetFilters, changeOrder } from "../../../redux/actions";
 import styles from "./Filters.module.css";
 
 
 export const Filters = () => {
     const dispatch = useDispatch();
-    const [tempFilter, setTempFilter] = useState('ALL');
-    const [originFilter, setOriginFilter] = useState('ALL');
-    const [order, setOrder] = useState('A-Z');
+    const currentFilter = useSelector((state) => state.currentFilter);
+    const currentOrder = useSelector((state) => state.currentOrder);
+    const [tempFilter, setTempFilter] = useState(currentFilter.tempName);
+    const [originFilter, setOriginFilter] = useState(currentFilter.source);
+    const [order, setOrder] = useState(currentOrder);
 
     useEffect(() => {  //useEffect escucha cambios del componente 
         dispatch(getAllTemperaments()); //dispacth trae la info 

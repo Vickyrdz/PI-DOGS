@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import {useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -14,14 +15,13 @@ export default function Detail() {
     const params = useParams();
     const dispatch = useDispatch();
 
-    // useSelector sirve para acceder a una parte del estado de redux
-    // es lo mismo que hacer mapStateToProps y recibir allDogs como prop en listado
     const dogDetail = useSelector((state) => state.dogDetail);
     const dogDetailError = useSelector((state) => state.dogDetailError);
     const loading = useSelector((state) => state.loading);
 
     useEffect(() => {  //useEffect escucha cambios del componente 
         dispatch(getDogById(params.id)); //dispacth trae la info 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.id]);
 
     useEffect(() => {
@@ -33,9 +33,9 @@ export default function Detail() {
     if (loading) return <Loading />;
     if (dogDetailError) return <div>not found</div>;
 
-    //
+    // esto es para no mostrar el detalle del perro anterior
     if (dogDetail === null 
-        || dogDetail.id.toString() !== params.id.toString()) return null;
+        || dogDetail.id.toString() !== params.id.toString()) return loading;
 
 
     //viene como objeto y quiero la propiedad 

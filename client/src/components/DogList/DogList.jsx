@@ -30,16 +30,20 @@ export default function DogList() {
         // si no tengo criterio de busqueda, traigo todo
         dispatch(changeLoading(true));
         dispatch(getAllDogs());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+
+        //Esto es por algo de extension 
+    // eslint-disable-next-line react-hooks/exhaustive-deps  
     }, []);
 
     useEffect(() => {
-        // si tengo criterio de busqueda, muestro la lista filtrada, sino la completa
+        // si tengo criterio de busqueda, muestro lo relacionado a la busqueda sini mouestro todo
         const list = search ? dogsByName : dogs;
         setPage(1);
         const newList = list
             .filter((dog) => {
                 if (currentFilter.tempName === 'ALL') return true;
+                //Esto es para los que vienen de la api sin temperamentos 
                 if (currentFilter.tempName === 'WITHOUT') return !dog.temperament;
                 const hasTemperament = dog.temperament && dog.temperament.includes(currentFilter.tempName);
                 return hasTemperament;
@@ -56,6 +60,7 @@ export default function DogList() {
                 const lessWeight = order === 'LIGHTER';
                 const moreWeight = order === 'HEAVIER';
 
+                //localcompare es por usar letras 
                 if (AZ) return aDog.name.localeCompare(bDog.name);
                 else if (ZA) return bDog.name.localeCompare(aDog.name);
                 else {

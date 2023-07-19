@@ -6,8 +6,7 @@ const postDogs = async (req, res) => {
     const { name, min_height, max_height, min_weight, max_weight, life_span, temperaments, image } = req.body;
 
     try {
- 
-        //VALIDACIONES: 
+        //para que no se repita el nombre
         const foundbd = await Dog.findOne({ where: { name }}); 
 
         if (foundbd) return res.status(400).send("There is already a dog with that name"); 
@@ -37,21 +36,26 @@ const postDogs = async (req, res) => {
         const dogsTemp = []; 
 
         // recorro la lista de temperamentos sin repetidos
+        // utilizo forOf porque no andaba el await
         for (const nameTemp of foundTemp) {
             //veo si ya existe
             let temperament = await Temperament.findOne({ where: { name: nameTemp }})
 
             // si no existe lo creo
-            if(!temperament){
+            if (!temperament) {
                 temperament = await Temperament.create({ 
                     name: nameTemp, 
                 });
             };
 
-            // guardo los temperamentos sin importar si los cree en este momento o los encontré ya creados
+            // guardo los temperamentos (objeto de mi base de datos)
+            // sin importar si los cree en este momento o los encontré ya creados
             dogsTemp.push(temperament); 
         }
 
+        // utilizo forOf porque no andaba el await
+        // ya tengo el perro creado y los temperamentos creados
+        // me falta relacionarlos entre si
         for (const dbTemp of dogsTemp) {
             // defino como crear la relación entre temperamento y perro
             const createDogTemperamentRelation = async () => {
